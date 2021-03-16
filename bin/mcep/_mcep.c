@@ -93,8 +93,8 @@ int mcep(double *xw, const int flng, double *mc, const int m, const double a,
    int i, j;
    int flag = 0, f2, m2;
    double t, s, eps = 0.0, min, max;
-   static double *x = NULL, *y, *c, *d, *al, *b;
-   static int size_x, size_d;
+   double *x = NULL, *y, *c, *d, *al, *b;
+   int size_x, size_d;
 
    if (etype == 1 && e < 0.0) {
       fprintf(stderr, "mcep : value of e must be e>=0!\n");
@@ -172,6 +172,8 @@ int mcep(double *xw, const int flng, double *mc, const int m, const double a,
       break;
    default:
       fprintf(stderr, "mcep : input type %d is not supported!\n", itype);
+      free(x);
+      free(d);
       return 2;
    }
    if (itype > 0) {
@@ -198,6 +200,8 @@ int mcep(double *xw, const int flng, double *mc, const int m, const double a,
       if (x[i] <= 0.0) {
          fprintf(stderr,
                  "mcep : periodogram has '0', use '-e' option to floor it!\n");
+         free(x);
+         free(d);
          return 4;
       }
       c[i] = log(x[i]);
@@ -247,12 +251,16 @@ int mcep(double *xw, const int flng, double *mc, const int m, const double a,
 
       if (theq(c, y, d, b, m + 1, f)) {
          fprintf(stderr, "mcep : Error in theq() at %dth iteration !\n", j);
+         free(x);
+         free(d);
          return 3;
       }
 
       for (i = 0; i <= m; i++)
          mc[i] += d[i];
    }
+   free(x);
+   free(d);
 
    if (flag)
       return (0);
@@ -278,8 +286,8 @@ int mcep(double *xw, const int flng, double *mc, const int m, const double a,
 void frqtr(double *c1, int m1, double *c2, int m2, const double a)
 {
    int i, j;
-   static double *d = NULL, *g;
-   static int size;
+   double *d = NULL, *g;
+   int size;
 
    if (d == NULL) {
       size = m2;
@@ -306,6 +314,6 @@ void frqtr(double *c1, int m1, double *c2, int m2, const double a)
    }
 
    movem(g, c2, sizeof(*g), m2 + 1);
-
+   free(d);
    return;
 }

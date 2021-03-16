@@ -285,8 +285,8 @@ static void cal_p(double **p, double **x, double *g, const int i)
 
 int theq(double *t, double *h, double *a, double *b, const int n, double eps)
 {
-   static double **r = NULL, **x, **xx, **p;
-   static int size;
+   double **r = NULL, **x, **xx, **p;
+   int size;
    double ex[4], ep[2], vx[4], bx[4], g[2];
    int i;
 
@@ -353,5 +353,15 @@ int theq(double *t, double *h, double *a, double *b, const int n, double eps)
    for (i = 0; i < n; i++)
       a[i] = p[i][0];
 
+   for (i = 0; i < size; i++) {
+      free((char *) r[i]);
+      free((char *) x[i]);
+      free((char *) xx[i]);
+      free((char *) p[i]);
+   }
+   free((char *) r);
+   free((char *) x);
+   free((char *) xx);
+   free((char *) p);
    return (0);
 }

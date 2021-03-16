@@ -71,8 +71,8 @@ void freqt(double *c1, const int m1, double *c2, const int m2, const double a)
 {
    int i, j;
    double b;
-   static double *d = NULL, *g;
-   static int size;
+   double *d = NULL, *g;
+   int size;
 
    if (d == NULL) {
       size = m2;
@@ -100,6 +100,6 @@ void freqt(double *c1, const int m1, double *c2, const int m2, const double a)
    }
 
    movem(g, c2, sizeof(*g), m2 + 1);
-
+   free(d);
    return;
 }
