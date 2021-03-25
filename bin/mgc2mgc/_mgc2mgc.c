@@ -74,8 +74,8 @@ void mgc2mgc(double *c1, const int m1, const double a1, const double g1,
              double *c2, const int m2, const double a2, const double g2)
 {
    double a;
-   static double *ca = NULL;
-   static int size_a;
+   double *ca = NULL;
+   int size_a;
 
    if (ca == NULL) {
       ca = dgetmem(m1 + 1);
@@ -100,6 +100,6 @@ void mgc2mgc(double *c1, const int m1, const double a1, const double g1,
       gc2gc(c2, m2, g1, c2, m2, g2);
       ignorm(c2, c2, m2, g2);
    }
-
+   free(ca);
    return;
 }

@@ -72,8 +72,8 @@
 void mgc2sp(double *mgc, const int m, const double a, const double g, double *x,
             double *y, const int flng)
 {
-   static double *c = NULL;
-   static int size;
+   double *c = NULL;
+   int size;
 
    if (c == NULL) {
       c = dgetmem(flng / 2 + 1);
@@ -87,6 +87,6 @@ void mgc2sp(double *mgc, const int m, const double a, const double g, double *x,
 
    mgc2mgc(mgc, m, a, g, c, flng / 2, 0.0, 0.0);
    c2sp(c, flng / 2, x, y, flng);
-
+   free(c);
    return;
 }

@@ -45,7 +45,7 @@
 /***************************************************************
     $Id: _gc2gc.c,v 1.19 2016/12/22 10:53:04 fjst15124 Exp $
 
-    Generalized Cepstral Transformation   
+    Generalized Cepstral Transformation
 
         void gc2gc(c1, m1, g1, c2, m2, g2)
 
@@ -72,8 +72,8 @@ void gc2gc(double *c1, const int m1, const double g1, double *c2, const int m2,
 {
    int i, min, k, mk;
    double ss1, ss2, cc;
-   static double *ca = NULL;
-   static int size;
+   double *ca = NULL;
+   int size;
 
    if (ca == NULL) {
       ca = dgetmem(m1 + 1);
@@ -103,6 +103,6 @@ void gc2gc(double *c1, const int m1, const double g1, double *c2, const int m2,
       else
          c2[i] = (g2 * ss2 - g1 * ss1) / i;
    }
-
+   free(ca);
    return;
 }
